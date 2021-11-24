@@ -7,9 +7,8 @@ from email.mime.text import MIMEText
 from imapclient import imap_utf7
 
 class imap:
-    HOST='imap.yandex.ru'
-    def __init__(self):
-        self.server=imaplib.IMAP4_SSL(self.HOST)
+    def __init__(self, host):
+        self.server=imaplib.IMAP4_SSL(host)
         pass
 
     def __del__(self):
@@ -20,12 +19,12 @@ class imap:
         self.server.login(self.login, password)
 
     def getFolders(self):
-       return [imap_utf7.decode(folder).split(' "|" ') for folder in  self.server.list()[1]]
+       return [imap_utf7.decode(folder).split(' "|" ')[1] for folder in  self.server.list()[1]]
 
 
 
     def checkFolderInList(self, fodlerName):
-        folder_in_email=[fodlerName==folder[1] for folder in self.getFolders()]
+        folder_in_email=[fodlerName==folder.replace('"', "") for folder in self.getFolders()]
         if any(folder_in_email):
             return True
         else:
@@ -39,3 +38,5 @@ class imap:
             rawMessage = [self.server.uid('fetch', uid, '(RFC822)') for uid in emails_uid]
             return [email.message_from_bytes(item[1][0][1], policy=email.policy.default) for item in rawMessage]
             pass
+        else:
+            return []

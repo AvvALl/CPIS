@@ -33,7 +33,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="exitBtn">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -42,11 +42,17 @@
       <height>40</height>
      </rect>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="text">
      <string>Выход/назад</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="loginBtn">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -55,11 +61,14 @@
       <height>40</height>
      </rect>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="text">
      <string>Войти</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="passwordEdit">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -68,11 +77,23 @@
       <height>30</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Password</string>
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+    <property name="placeholderText">
+     <string>password</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="emailCombo">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -97,7 +118,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="logoLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -113,7 +134,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="loginEdit">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -122,8 +143,17 @@
       <height>30</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Login</string>
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>login</string>
     </property>
    </widget>
   </widget>

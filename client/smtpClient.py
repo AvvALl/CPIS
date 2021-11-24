@@ -1,9 +1,8 @@
 import smtplib
 
 class smtp:
-    HOST="smtp.yandex.ru"
-    def __init__(self):
-        self.server=smtplib.SMTP_SSL(self.HOST,465)
+    def __init__(self, host):
+        self.server=smtplib.SMTP_SSL(host,465)
 
     def __del__(self):
         self.server.quit()
@@ -14,6 +13,7 @@ class smtp:
         self.server.send_message(message)
 
     def checkExistens(self, email):
+        self.server.mail(email)
         code, msg= self.server.rcpt(email)
         if code==250:
             return True
@@ -21,10 +21,6 @@ class smtp:
             return False
 
     def login(self, login, password):
-        """
-        if self.checkExistens(login):
-            raise Exception("Не существует такой почты")
-        """
         self.login=login
         self.server.login(self.login, password)
 

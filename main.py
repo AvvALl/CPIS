@@ -2,15 +2,17 @@ from client.messages import  Message
 
 from client.imapClient import imap
 from client.smtpClient import smtp
+from client.client import client
 from encryption.crypt import  crypt
-login, passw='avvallls@yandex.ru','13052000zx'
+login, passw, email='avvallls','13052000zx','yandex'
 """
-sm=smtp()
-im=imap()
+sm=smtp(email)
+im=imap(email)
 
 sm.login(login,passw)
 im.login(login, passw)
 print(im.getFolders())
+
 lst=im.getMessagesFromFloder("INBOX")
 if lst[0].is_multipart():
     str = ""
@@ -22,5 +24,11 @@ if lst[0].is_multipart():
         str += body
     body=str
 """
-crp=crypt()
-print(crp.verify(crp.keyRSA.public_key(),"asdsadфыв",crp.sign("asdsadфыв")))
+"""
+cl=client(login, passw, email)
+cl.loginToAccaunt()
+print(cl.server_imap.getFolders())
+"""
+lst=["sas", "kas"]
+frt=dict.fromkeys(lst, [])
+print(frt)
