@@ -2,8 +2,9 @@ from client.messages import  Message
 
 from client.imapClient import imap
 from client.smtpClient import smtp
+from encryption.crypt import  crypt
 login, passw='avvallls@yandex.ru','13052000zx'
-
+"""
 sm=smtp()
 im=imap()
 
@@ -20,5 +21,6 @@ if lst[0].is_multipart():
         body = payload.get_payload(decode=True).decode('utf-8')
         str += body
     body=str
-
-print(body)
+"""
+crp=crypt()
+print(crp.verify(crp.keyRSA.public_key(),"asdsadфыв",crp.sign("asdsadфыв")))
