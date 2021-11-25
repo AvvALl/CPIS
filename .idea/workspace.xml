@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90a0d5ed-f188-4801-bc86-75fbf92b612b" name="Default Changelist" comment="finishing writing crypt class, and add interface files">
-      <change afterPath="$PROJECT_DIR$/inteface/emailWindow.py" afterDir="false" />
+    <list default="true" id="90a0d5ed-f188-4801-bc86-75fbf92b612b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/imapClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/imapClient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/smtpClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/smtpClient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inteface/authenticationDialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/inteface/authenticationDialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uiForms/authForm.py" beforeDir="false" afterPath="$PROJECT_DIR$/uiForms/authForm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uiForms/authForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/uiForms/authForm.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inteface/emailWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/inteface/emailWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uiForms/mainForm.py" beforeDir="false" afterPath="$PROJECT_DIR$/uiForms/mainForm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uiForms/mainForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/uiForms/mainForm.ui" afterDir="false" />
     </list>
@@ -41,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/inteface/authenticationDialog.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test" />
   </component>
   <component name="RunManager" selected="Python.authenticationDialog">
     <configuration name="authenticationDialog" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -135,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637745996040</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add authorization window, and write some features for main window">
+      <created>1637772228291</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1637772228291</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,7 +143,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -153,7 +155,8 @@
     <MESSAGE value="Added class message and smtp client class &#10;New file imapClient.py" />
     <MESSAGE value="add realization of imap class&#10;test some features" />
     <MESSAGE value="finishing writing crypt class, and add interface files" />
-    <option name="LAST_COMMIT_MESSAGE" value="finishing writing crypt class, and add interface files" />
+    <MESSAGE value="add authorization window, and write some features for main window" />
+    <option name="LAST_COMMIT_MESSAGE" value="add authorization window, and write some features for main window" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637750729985">
@@ -164,46 +167,46 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="708" y="327" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1637591710793" />
-    <state x="614" y="119" key="CommitChangelistDialog2" timestamp="1637763373104">
+    <state x="614" y="119" key="CommitChangelistDialog2" timestamp="1637772227621">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="614" y="119" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1637763373104" />
-    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1637750728334">
+    <state x="614" y="119" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1637772227621" />
+    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1637823556577">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1637750728334" />
-    <state width="1899" height="285" key="GridCell.Tab.0.bottom" timestamp="1637771703009">
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1637823556577" />
+    <state width="1899" height="285" key="GridCell.Tab.0.bottom" timestamp="1637869562076">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1637771703009" />
-    <state width="1899" height="285" key="GridCell.Tab.0.center" timestamp="1637771703009">
+    <state width="1899" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1637869562076" />
+    <state width="1899" height="285" key="GridCell.Tab.0.center" timestamp="1637869562076">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="285" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1637771703009" />
-    <state width="1899" height="285" key="GridCell.Tab.0.left" timestamp="1637771703009">
+    <state width="1899" height="285" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1637869562076" />
+    <state width="1899" height="285" key="GridCell.Tab.0.left" timestamp="1637869562075">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="285" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1637771703009" />
-    <state width="1899" height="285" key="GridCell.Tab.0.right" timestamp="1637771703009">
+    <state width="1899" height="285" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1637869562075" />
+    <state width="1899" height="285" key="GridCell.Tab.0.right" timestamp="1637869562076">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="285" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1637771703009" />
-    <state width="1899" height="352" key="GridCell.Tab.1.bottom" timestamp="1637770606632">
+    <state width="1899" height="285" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1637869562076" />
+    <state width="1899" height="352" key="GridCell.Tab.1.bottom" timestamp="1637866068734">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="352" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1637770606632" />
-    <state width="1899" height="352" key="GridCell.Tab.1.center" timestamp="1637770606632">
+    <state width="1899" height="352" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1637866068734" />
+    <state width="1899" height="352" key="GridCell.Tab.1.center" timestamp="1637866068733">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="352" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1637770606632" />
-    <state width="1899" height="352" key="GridCell.Tab.1.left" timestamp="1637770606632">
+    <state width="1899" height="352" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1637866068733" />
+    <state width="1899" height="352" key="GridCell.Tab.1.left" timestamp="1637866068733">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="352" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1637770606632" />
-    <state width="1899" height="352" key="GridCell.Tab.1.right" timestamp="1637770606632">
+    <state width="1899" height="352" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1637866068733" />
+    <state width="1899" height="352" key="GridCell.Tab.1.right" timestamp="1637866068733">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="352" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1637770606632" />
+    <state width="1899" height="352" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1637866068733" />
     <state x="769" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637594489912">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -212,16 +215,5 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1637751458770" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/inteface/emailWindow.py</url>
-          <line>70</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

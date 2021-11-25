@@ -1,3 +1,4 @@
+from datetime import datetime
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import *
@@ -18,6 +19,40 @@ def showMessage(state, message):
     msgBox.setText(message)
     msgBox.setStandardButtons(QMessageBox.Ok)
     msgBox.exec_()
+
+def getDateForPreview(date):
+    correctDate= datetime.strptime(date, "%a, %d %b %Y %H:%M:%S %z")
+    return correctDate.strftime("%d-%b-%Y").split('-')
+
+"""
+Class defines message view in list of messages main window
+"""
+class messagePreview(QtWidgets.QWidget):
+
+    def __init__(self, fromAddr, msg, attachCombo, date, attachments=False):
+        super(messagePreview, self).__init__()
+
+        self.setFixedHeight(50)
+        self.row=QHBoxLayout()
+        self.stateBox, self.fromAddrLabel, self.messageBody,self.attCombo, self.dateLabel=QCheckBox(), QLabel(fromAddr), QLabel(msg), QComboBox(), QLabel(date)
+
+        #self.stateBox.setFixedWidth(15)
+        self.attCombo.addItems(attachCombo)
+        if not attachments:
+            self.attCombo.hide()
+
+        #self.fromAddrLabel.setFixedWidth(75)
+        self.fromAddrLabel.setAlignment(QtCore.Qt.AlignLeft)
+        #self.messageBody.setFixedWidth(500)
+        self.messageBody.setAlignment(QtCore.Qt.AlignLeft)
+
+        self.row.addWidget(self.stateBox,2,alignment=Qt.AlignLeft)
+        self.row.addWidget(self.fromAddrLabel,15,alignment=Qt.AlignLeft)
+        self.row.addWidget(self.messageBody,73, alignment=Qt.AlignLeft)
+        self.row.addWidget(self.attCombo,5, alignment=Qt.AlignLeft)
+        self.row.addWidget(self.dateLabel,5, alignment=Qt.AlignLeft)
+
+        self.setLayout(self.row)
 
 
 class emailWindow(QtWidgets.QMainWindow):
@@ -74,16 +109,20 @@ class emailWindow(QtWidgets.QMainWindow):
 
 
             messages=self.messangesInFolders[self.currentFolderName[indx]]
-            messagesModel=QtGui.QStandardItemModel()
-            self.ui.listOfMessages.setModel(messagesModel)
             for i in range(len(messages)-1,-1, -1) :
-                item=QtGui.QStandardItem()
+                item=QListWidgetItem(self.ui.listOfMessages)
+                self.ui.listOfMessages.addItem(item)
+                newDate=getDateForPreview(messages[i]["Date"])
+                row=messagePreview(self.removeSubString(messages[i]['from']),messages[i]["subject"], [],str(newDate[0]+' '+newDate[1]))
+                item.setSizeHint(row.minimumSizeHint())
+                self.ui.listOfMessages.setItemWidget(item,row)
+                """item=QtGui.QStandardItem()
                 item.setSelectable(True)
                 item.setEditable(False)
                 msgHeader=self.removeSubString(messages[i]['from']).ljust(25)+messages[i]["subject"]
                 print(messages[i]["Date"])
                 item.setText(msgHeader)
-                messagesModel.appendRow(item)
+                messagesModel.appendRow(item)"""
 
 
 

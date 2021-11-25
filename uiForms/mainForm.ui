@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1343</width>
-    <height>898</height>
+    <width>1500</width>
+    <height>950</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,77 +17,117 @@
    <string notr="true">background: white;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>1321</width>
-      <height>851</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="1,100,80" columnstretch="1,5" rowminimumheight="0,0,0" columnminimumwidth="2,1">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item row="0" column="0">
-      <widget class="QWidget" name="widget" native="true"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QListView" name="listOfFolders">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked</set>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="textElideMode">
-        <enum>Qt::ElideRight</enum>
-       </property>
-       <property name="spacing">
-        <number>15</number>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
-       <property name="selectionRectVisible">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QListView" name="listOfButtons">
-       <property name="flow">
-        <enum>QListView::LeftToRight</enum>
-       </property>
-       <property name="resizeMode">
-        <enum>QListView::Fixed</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" rowspan="2">
-      <widget class="QListView" name="listOfMessages">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,6,6" columnstretch="2,11" rowminimumheight="1,1,1" columnminimumwidth="2,1">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetFixedSize</enum>
+      </property>
+      <item row="1" column="0">
+       <widget class="QListView" name="listOfFolders">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked</set>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideRight</enum>
+        </property>
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="modelColumn">
+         <number>0</number>
+        </property>
+        <property name="selectionRectVisible">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" rowspan="2">
+       <widget class="QListWidget" name="listOfMessages">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="90,10">
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Написать</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <widget class="QListView" name="listOfBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="flow">
+         <enum>QListView::LeftToRight</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Fixed</enum>
+        </property>
+        <property name="spacing">
+         <number>9</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1343</width>
+     <width>1500</width>
      <height>22</height>
     </rect>
    </property>
