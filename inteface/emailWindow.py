@@ -8,7 +8,7 @@ from client.client import client
 from client.messages import  Message
 from uiForms.mainForm import Ui_MainWindow
 from inteface.readingMessage import readingMessage
-
+from inteface.sendingMessage import sendingMessage
 
 def showMessage(state, message):
     msgBox = QMessageBox()
@@ -89,6 +89,7 @@ class emailWindow(QtWidgets.QMainWindow):
 
         self.ui.listOfFolders.clicked.connect(self.changeFolder)
         self.ui.listOfMessages.clicked.connect(self.openLetter)
+        self.ui.sendBtn.clicked.connect(self.writeLetter)
 
     def setFolders(self):
         lstOfFoleders=self.cl.server_imap.getFolders()
@@ -151,3 +152,10 @@ class emailWindow(QtWidgets.QMainWindow):
         openMessage.show()
         openMessage.exec_()
         pass
+
+    def writeLetter(self):
+        sendMessage=sendingMessage()
+        sendMessage.show()
+        sendMessage.exec_()
+
+
