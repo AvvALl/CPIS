@@ -10,12 +10,13 @@ import textwrap
 from zipfile import ZipFile
 
 class readingMessage(QtWidgets.QDialog):
-    dirForAttach="A:/trash/attachments/"
-    def __init__(self, msg):
+    dirForAttach="A:/trash/CPISfiles/attachments/"
+    def __init__(self, msg, client):
         super(readingMessage, self).__init__()
         self.ui = Ui_readMessageDialog()
         self.ui.setupUi(self)
 
+        self.cl=client
         self.ui.subjectLabel.setText(msg.subject)
         self.ui.fromLabel.setText(self.ui.fromLabel.text()+msg.fromAddr)
         self.ui.toLabel.setText(self.ui.toLabel.text()+msg.toAddr)

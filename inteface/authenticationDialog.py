@@ -5,7 +5,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIntValidator, QIcon
 from client.client import client
-from inteface.emailWindow import showMessage, emailWindow
+from inteface.emailWindow import emailWindow
+from client.utils import showMessage
 from uiForms.authForm import Ui_Dialog
 import re
 

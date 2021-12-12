@@ -1,5 +1,10 @@
 import ntpath
+import re
 import textwrap
+import os
+import sys
+import uuid
+import time
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import *
@@ -9,10 +14,9 @@ from PyQt5.QtPrintSupport import *
 from PyQt5 import Qt
 from uiForms.sendForm import Ui_sendingForm
 from inteface.readingMessage import attachFile
-import os
-import sys
-import uuid
-
+from client.utils import showMessage
+from client.messages import Message
+import copy
 
 FONT_SIZES = [7, 8, 9, 10, 11, 12, 13, 14, 18, 24, 36, 48, 64, 72, 96, 144, 288]
 COLOR_NAME=["#000000", "#a0a0a4", "#0000ff", "#ffff00", "#ff0000", "#00ff00","#800080", "#a52a2a", "#ffffff"]
@@ -72,7 +76,7 @@ class TextEdit(QTextEdit):
 
 
 class sendingMessage(QtWidgets.QDialog):
-    def __init__(self):
+    def __init__(self, client):
         super(sendingMessage, self).__init__()
         self.ui = Ui_sendingForm()
         self.ui.setupUi(self)
@@ -132,19 +136,19 @@ class sendingMessage(QtWidgets.QDialog):
         self.alignl_action = QAction(QIcon(os.path.join('images', 'edit-alignment.png')), "Align left", self)
         self.alignl_action.setStatusTip("Align text left")
         self.alignl_action.setCheckable(True)
-        self.alignl_action.triggered.connect(lambda: self.textEdit.setAlignment(Qt.AlignLeft))
+        self.alignl_action.triggered.connect(lambda: self.textEdit.setAlignment(QtCore.Qt.AlignLeft))
         self.toolBar.addAction(self.alignl_action)
 
         self.alignc_action = QAction(QIcon(os.path.join('images', 'edit-alignment-center.png')), "Align center", self)
         self.alignc_action.setStatusTip("Align text center")
         self.alignc_action.setCheckable(True)
-        self.alignc_action.triggered.connect(lambda: self.textEdit.setAlignment(Qt.AlignCenter))
+        self.alignc_action.triggered.connect(lambda: self.textEdit.setAlignment(QtCore.Qt.AlignCenter))
         self.toolBar.addAction(self.alignc_action)
 
         self.alignr_action = QAction(QIcon(os.path.join('images', 'edit-alignment-right.png')), "Align right", self)
         self.alignr_action.setStatusTip("Align text right")
         self.alignr_action.setCheckable(True)
-        self.alignr_action.triggered.connect(lambda: self.textEdit.setAlignment(Qt.AlignRight))
+        self.alignr_action.triggered.connect(lambda: self.textEdit.setAlignment(QtCore.Qt.AlignRight))
         self.toolBar.addAction(self.alignr_action)
 
         self._format_actions = [
@@ -155,12 +159,13 @@ class sendingMessage(QtWidgets.QDialog):
             self.underline_action,
             # We don't need to disable signals for alignment, as they are paragraph-wide.
         ]
+        self.cl=client
 
         self.ui.attachTable.horizontalHeader().hide()
         self.ui.attachTable.verticalHeader().hide()
         self.attachments=[]
         self.ui.attachBtn.clicked.connect(self.attachFileToMessage)
-
+        self.ui.sendBtn.clicked.connect(self.sendMessage)
     def update_format(self):
         """
         Update the font format toolbar/actions when a new text selection is made. This is neccessary to keep
@@ -220,7 +225,8 @@ class sendingMessage(QtWidgets.QDialog):
             with open(fileName, 'rb') as f:
                 data = f.read()
             base_name=self.path_leaf(fileName)
-            self.attachments.append((base_name, data))
+
+            self.attachments.append((base_name,data))
 
             #show icon of attachments file
             if len(self.attachments) != 0:
@@ -233,3 +239,71 @@ class sendingMessage(QtWidgets.QDialog):
                                                              "A:/data/Icons/48px/" + format[1:] + ".png"))
                 # self.ui.attachTable.resizeColumnsToContents()
                 self.ui.attachTable.resizeRowsToContents()
+
+    def checkAdress(self, str):
+        pattern = "^[a-zA-Z0-9]*@([a-z]+.)+[a-z]{2,4}$"
+        str=str.split(',')
+        for address in str:
+            if bool(re.match(pattern, address)):
+                self.ui.toEdit.setText(address)
+                self.ui.toEdit.setStyleSheet("QLineEdit{border: 2px solid black;}")
+            else:
+                self.ui.toEdit.setStyleSheet("QLineEdit{border:2px solid rgb(255,0,0);}")
+
+    def sendMessage(self):
+
+        pattern = "^[a-zA-Z0-9]*@([a-z]+.)+[a-z]{2,4}$"
+        try:
+            #check subject
+            subject = self.ui.subjectEdit.text()
+            if subject!="":
+                #check addresses
+                toAddr = self.ui.toEdit.text()
+                toAddr=toAddr.split(',')
+                mailing= True if len(toAddr)>1 else False
+                correctAddresses=[ bool(re.match(pattern,addr)) for addr in toAddr]
+                if all(correctAddresses):
+                    type_message = True
+                    #key exchange
+                    if not mailing and self.cl.encrypted:
+                        if toAddr[0] != self.cl.full_login:
+                            status=self.keyExchange(toAddr[0])
+                            if status:
+                                #encryption body and attachments
+                                ebody=self.cl.encryptBodyText(self.textEdit.toHtml(), self.cl.senders[toAddr[0]][0])
+                                if len(self.attachments)!=0:
+                                    attachments=[(attach[0],self.cl.encryptAttachments(attach[1], self.cl.senders[toAddr[0]][0])) for attach in self.attachments]
+                                    self.attachments=attachments
+                            else:
+                                ebody = self.textEdit.toHtml()
+                        else:
+                            ebody=self.cl.encryptBodyText(self.textEdit.toHtml(), self.cl.crypto.keyRSA.public_key())
+                            if len(self.attachments) != 0:
+                                attachments = [(attach[0],self.cl.encryptAttachments(attach[1], self.cl.crypto.keyRSA.public_key()))
+                                                    for attach in self.attachments]
+                                self.attachments=attachments
+                    else:
+                        type_message=False
+                        ebody=self.textEdit.toHtml()
+                    newMessage=Message().buildMessage(self.cl.login+self.cl.emails[self.cl.email][0],toAddr,subject, ebody,self.attachments, mailing=mailing,type_message=type_message)
+                    self.cl.server_smtp.sendMessage(newMessage)
+                    self.close()
+                else:
+                    showMessage(False, "Неверно задан адрес получателя")
+            else:
+                showMessage(False, "Тема не задана")
+        except Exception as e:
+            print(e.args)
+            showMessage(False, "Сообщение не было отправлено")
+
+
+    def keyExchange(self, toAddr):
+        if toAddr not in self.cl.senders:
+            self.cl.sendKeys(toAddr)
+            start=time.time()
+            while toAddr not in self.cl.senders:
+                if start+6<time.time():
+                    return False
+            return True
+        else:
+            return True
