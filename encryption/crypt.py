@@ -6,15 +6,15 @@ from Crypto.Util.Padding import pad, unpad
 from Crypto.Hash import  MD5
 from base64 import b64encode, b64decode
 from datetime import date
+from client.utils import toDate
 import os.path
 import json
 import time
 
 class crypt:
-    def __init__(self, user, new_keys=False):
-        self.filepath="A:/trash/CPISfiles/userKeys/privateKeys"+user+".bin"
-        self.generateKeyRSA()
-        self.generateKeySign()
+    def __init__(self, new_keys=False):
+        self.id_keyRSA, self.id_keySign=0,0
+        pass
 
     def generateKeyRSA(self, length=2048):
         self.keyRSA=RSA.generate(length)
@@ -32,8 +32,14 @@ class crypt:
 
 
 
-    def loadKeyRSA(self):
+    def loadKeyRSA(self, privateRSA_data):
+        self.keyRSA=RSA.import_key(privateRSA_data[2].encode())
+        self.keyDateRSA=toDate(privateRSA_data[3]).date()
         pass
+
+    def loadKeySign(self, privateSign_data):
+        self.keySign = RSA.import_key(privateSign_data[2].encode())
+        self.keyDateSign = toDate(privateSign_data[3]).date()
 
     def generateKeyDES(self):
         self.key=get_random_bytes(DES.block_size)
@@ -69,12 +75,12 @@ class crypt:
 
         return (enc_session_key, enc_session_iv, ct_bytes)
 
-    def decryptText(self, cipher):
+    def decryptText(self, cipher, keyRSA):
         enc_session_key=b64decode(cipher[0])
         enc_session_iv=b64decode(cipher[1])
         ciphertext=b64decode(cipher[2])
 
-        cipher_rsa = PKCS1_OAEP.new(self.keyRSA)
+        cipher_rsa = PKCS1_OAEP.new(keyRSA)
         session_key=cipher_rsa.decrypt(enc_session_key)
         session_iv=cipher_rsa.decrypt(enc_session_iv)
 
@@ -83,8 +89,8 @@ class crypt:
         return text.decode('utf-8')
         pass
 
-    def decryptFile(self, cipher):
-        cipher_rsa = PKCS1_OAEP.new(self.keyRSA)
+    def decryptFile(self, cipher, keyRSA):
+        cipher_rsa = PKCS1_OAEP.new(keyRSA)
         session_key = cipher_rsa.decrypt(cipher[0])
         session_iv = cipher_rsa.decrypt(cipher[1])
 
