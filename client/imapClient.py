@@ -69,50 +69,7 @@ class imap:
         else:
             return False
 
-    def getKeysFromFolder(self):
-        if not self.stop:
-            self.server.select('INBOX')
-            result,data=self.server.uid('search', None, '(SUBJECT "keysTakeNow")')
-            if result=='OK' and data[0] is not None:
-                emails_uid=data[0].split()
-                rawMessage=[self.server.uid('fetch', uid, 'RFC822') for uid in emails_uid]
 
-                return emails_uid, [email.message_from_bytes(item[1][0][1], policy=email.policy.default) for item in rawMessage]
-            else:
-                return [],[]
-        return [],[]
-
-    def getKeysFromFolder2(self):
-        self.lock.acquire()
-        try:
-            self.server.select("INBOX")
-            result, data=self.server.uid('search', None, 'ALL')
-        finally:
-            self.lock.release()
-
-        if result=='OK' and data[0] is not None:
-            emails_uid=data[0].split()
-            self.lock.acquire()
-            try:
-                rawMessage=[self.server.uid('fetch', uid, 'RFC822.HEADER') for uid in emails_uid]
-            finally:
-                self.lock.release()
-            uids, msgs=[],[]
-            for i in range(len(emails_uid)):
-                msg=email.message_from_bytes(rawMessage[i][1][0][1], policy=email.policy.default)
-                if msg["subject"]=="::<keys>::":
-                    uids.append(emails_uid[i])
-                    self.lock.acquire()
-                    try:
-                        raw_msg = self.server.uid('fetch', emails_uid[i], '(RFC822)')
-                    finally:
-                        self.lock.release()
-                    msg = email.message_from_bytes(raw_msg[1][0][1], policy=email.policy.default)
-                    msgs.append(msg)
-
-            return uids, msgs
-        else:
-            return [],[]
 
     def getMessagesFromFolder(self, folderName):
         self.lock.acquire()

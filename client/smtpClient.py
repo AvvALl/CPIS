@@ -3,18 +3,21 @@ import smtplib
 class smtp:
     def __init__(self, host):
         self.host=host
-        self.server=smtplib.SMTP_SSL(host,port=465)
+        self.server=smtplib.SMTP_SSL(self.host, port=465)
+        #self.server=smtplib.SMTP_SSL(host,port=465)
 
 
     """
     sending formed message 
     """
     def sendMessage(self, message):
-        if not self.checkConnection():
-            if __name__ == '__main__':
-                self.server.connect(self.host)
-            self.server.login(self.userLogin,self.userPassw)
-        self.server.send_message(message)
+        try:
+            self.server.connect(self.host, port=465)
+            self.server.login(self.userLogin, self.userPassw)
+            self.server.send_message(message)
+            self.server.quit()
+        except:
+            self.server.quit()
 
     def checkExistens(self, email):
         self.server.mail(email)
@@ -26,7 +29,7 @@ class smtp:
 
     def login(self, login, password):
         self.userLogin, self.userPassw=login, password
-        self.server.login(self.userLogin, self.userPassw)
+        #self.server.login(self.userLogin, self.userPassw)
 
     def checkConnection(self):
         try:

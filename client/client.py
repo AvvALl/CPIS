@@ -104,7 +104,7 @@ class client:
     def sendKeys(self, address, resend=False):
         data=json.dumps((resend,self.crypto.getKeyHash(self.crypto.keyRSA.public_key().export_key()),self.crypto.id_keyRSA,self.crypto.keyRSA.public_key().export_key().decode(), self.crypto.getKeyHash(self.crypto.keySign.public_key().export_key()),self.crypto.id_keySign,self.crypto.keySign.public_key().export_key().decode()))
         self.server_smtp.sendMessage(Message().buildMessage(self.full_login,[address],"::<keys>::", data))
-        self.server_imap.deleteSentKeys(self.email)
+        #self.server_imap.deleteSentKeys(self.email)
 
 
     def checkPublicKeys(self, pars):
@@ -114,6 +114,8 @@ class client:
     def takeSenderKeys(self):
         ihandler=imap_handler(self.emails[self.email][2])
         ihandler.login(self.full_login, self.password)
+        tdb=db()
+        tdb.curUserId=self.ndb.curUserId
         while self.run_state:
             time.sleep(5)
             uids, msgsWithkeys=ihandler.getKeysFromFolder2()
@@ -125,12 +127,17 @@ class client:
                     keys[3], keys[6]=RSA.import_key(keys[3].encode()),RSA.import_key(keys[6].encode())
                     #print(str(self.crypto.getKeyHash(keys[1])), keys[0])
                     if str(self.crypto.getKeyHash(keys[3].export_key()))==keys[1] and str(self.crypto.getKeyHash(keys[6].export_key())==keys[4]) :
-                        self.communicate.sig.emit((keys[0],msg.fromAddr,keys[2], keys[3].export_key(), keys[5], keys[6].export_key()))
-
+                        #self.communicate.sig.emit((keys[0],msg.fromAddr,keys[2], keys[3].export_key(), keys[5], keys[6].export_key()))
+                        if not tdb.checkPublicKeys(msg.fromAddr) or keys[0]:
+                            self.sendKeys(msg.fromAddr)
+                        if not tdb.checkPublicKeysByIds(msg.fromAddr, keys[2], keys[5]):
+                            data=(msg.fromAddr, keys[2], keys[3].export_key(), keys[5], keys[6].export_key())
+                            tdb.insertPublicKeys(data)
                 self.server_imap.deleteMessages(uids, 'INBOX')
 
 
     def encryptBodyText(self, text, keyRSA, keyIds):
+
         full_body=(keyIds+self.crypto.encryptText(text, keyRSA)+(self.crypto.signText(text),))
         return json.dumps(full_body)
 

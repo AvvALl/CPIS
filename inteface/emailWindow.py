@@ -90,7 +90,7 @@ class emailWindow(QtWidgets.QMainWindow):
         self.cntMessages, self.currChoosingMessages, self.choosedMessagesUid, self.choosedMessagesIndx = 0, 0, [], []
 
         self.communicate=Communicate()
-        self.communicate.sig[tuple].connect(self.updateUsersKeys)
+        #self.communicate.sig[tuple].connect(self.updateUsersKeys)
 
         self.cl=client_obj
         self.cl.setCommunicate(self.communicate)

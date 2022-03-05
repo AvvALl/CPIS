@@ -314,9 +314,11 @@ class sendingMessage(QtWidgets.QDialog):
         if not self.cl.ndb.checkPublicKeys(toAddr):
             self.cl.sendKeys(toAddr, True)
             start=time.time()
-            while not self.cl.ndb.checkPublicKeys(toAddr) :
-                if start+10<time.time():
+            while 1:
+                if start+35<time.time():
                     return False
+                elif self.cl.ndb.checkPublicKeys(toAddr):
+                    return True
             return True
         else:
             return True
